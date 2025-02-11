@@ -11,17 +11,26 @@ import os
 # LINE_NOTIFY_TOKEN = os.getenv("LINE_NOTIFY_TOKEN")
 LINE_NOTIFY_TOKEN = "67fXIZY32D7uQfHGAp7mXVVGGQeE0S8od49JQKZMvsm"
 
+# check market is open
+def isMarketOpen():
+    taiwanTimeZone = pytz.timezone('Asia/Taipei')
+    now = datetime.now(taiwanTimeZone)
+
+    marketOpen = time(9, 0, 0)
+    marketClose = time(13, 30, 0)
+
+    return now.weekday() < 5 and marketOpen <= now.time() <= marketClose
+
 
 # get 006208 ETD historical data
-
-def get_stock_data():
+def getStockData():
     stock = yf.Ticker('006208.TW')
     df = stock.history(period='1mo')
     return df
 
 
 # 計算 K 值（隨機指數）
-def calculate_stochastic_k(df, period=14):
+def calculateStochasticK(df, period=14):
     df["Low"] = df["Low"].rolling(window=period).min()
     df["High"] = df["High"].rolling(window=period).max()
     df["%K"] = (df["Close"] - df["Low"]) / (df["High"] - df["Low"]) * 100
@@ -29,7 +38,7 @@ def calculate_stochastic_k(df, period=14):
 
 
 # 發送 LINE 訊息
-def send_line_message(message):
+def sendLineMessage(message):
     url = "https://notify-api.line.me/api/notify"
     headers = {"Authorization": f"Bearer {LINE_NOTIFY_TOKEN}"}
     data = {"message": message}
@@ -40,7 +49,7 @@ def send_line_message(message):
         print(f"通知發送失敗: {response.status_code}", response.text)
 
 # 獲取最新的收盤價
-def get_latest_price():
+def getLatestPrice():
     try:
         ticker = yf.Ticker('006208.TW')  # 006208 是台灣 ETF 的代碼
         df = ticker.history(period='1d')  # 抓取當天的數據
@@ -54,8 +63,10 @@ def get_latest_price():
         return None
     
 
-# 每小時報一次最新目標價
-def monitor_latest_price():
+# 報一次最新目標價
+def monitorLatestPrice():
+    if not isMarketOpen():
+        return
     latest_price = get_latest_price()
     if latest_price is not None:
         message = f"📢 006208 ETF 最新收盤價為：{latest_price:.2f} 元"
@@ -65,7 +76,7 @@ def monitor_latest_price():
 
 # 主程式
 if __name__ == "__main__":
-    monitor_latest_price()
+    monitorLatestPrice()
 
 # 監控 ETF K 值
 # def monitor_etf():
