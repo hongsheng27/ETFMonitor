@@ -7,7 +7,8 @@ import time
 from datetime import datetime
 import os
 
-LINE_NOTIFY_TOKEN = os.getenv("LINE_NOTIFY_TOKEN")
+LINE_NOTIFY_TOKEN = "67fXIZY32D7uQfHGAp7mXVVGGQeE0S8od49JQKZMvsm"
+# LINE_NOTIFY_TOKEN = os.getenv("LINE_NOTIFY_TOKEN")
 
 
 # get 006208 ETD historical data
@@ -31,24 +32,35 @@ def send_line_message(message):
     url = "https://notify-api.line.me/api/notify"
     headers = {"Authorization": f"Bearer {LINE_NOTIFY_TOKEN}"}
     data = {"message": message}
-    requests.post(url, headers=headers, data=data)
+    response = requests.post(url, headers=headers, data=data)
+    if response.status_code == 200:
+        print("通知發送成功")
+    else:
+        print(f"通知發送失敗: {response.status_code}")
 
 # 獲取最新的收盤價
 def get_latest_price():
-    ticker = yf.Ticker('006208.TW')  # 006208 是台灣 ETF 的代碼
-    df = ticker.history(period='1d')  # 抓取當天的數據
-    if not df.empty:
-        return df['Close'].iloc[-1]  # 獲取最新的收盤價
-    return None
+    try:
+        ticker = yf.Ticker('006208.TW')  # 006208 是台灣 ETF 的代碼
+        df = ticker.history(period='1d')  # 抓取當天的數據
+        if not df.empty:
+            return df['Close'].iloc[-1]  # 獲取最新的收盤價
+        else:
+            print("無法獲取數據，可能是市場未開盤或數據來源有問題")
+            return None
+    except Exception as e:
+        print(f"發生錯誤：{e}")
+        return None
+    
 
 # 每小時報一次最新目標價
 def monitor_latest_price():
-    while True:
-        latest_price = get_latest_price()
-        if latest_price is not None:
-            message = f"📢 006208 ETF 最新收盤價為：{latest_price:.2f} 元"
-            send_line_message(message)
-        time.sleep(3600)  # 每小時執行一次
+    latest_price = get_latest_price()
+    if latest_price is not None:
+        message = f"📢 006208 ETF 最新收盤價為：{latest_price:.2f} 元"
+        send_line_message(message)
+    else:
+        print("未獲取到最新價格，跳過通知")
 
 # 主程式
 if __name__ == "__main__":
