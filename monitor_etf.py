@@ -3,6 +3,8 @@ import pandas as pd
 import numpy as np
 import time
 import yfinance as yf
+import time
+from datetime import datetime
 
 LINE_NOTIFY_TOKEN = '67fXIZY32D7uQfHGAp7mXVVGGQeE0S8od49JQKZMvsm'
 
