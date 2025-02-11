@@ -1,0 +1,31 @@
+name: Run ETF Monitor
+
+on:
+  schedule:
+    - cron: "0 * * * *"  # 每小時執行一次
+  workflow_dispatch:       # 允許手動觸發
+
+jobs:
+  monitor-etf:
+    runs-on: ubuntu-latest  # 運行在 Ubuntu 環境
+
+    steps:
+      # 步驟 1：檢查代碼
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 步驟 2：設置 Python 環境
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      # 步驟 3：安裝依賴
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # 步驟 4：執行腳本
+      - name: Run ETF monitor script
+        run: python monitor_etf.py
