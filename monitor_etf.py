@@ -36,7 +36,7 @@ def send_line_message(message):
     if response.status_code == 200:
         print("通知發送成功")
     else:
-        print(f"通知發送失敗: {response.status_code}")
+        print(f"通知發送失敗: {response.status_code}", response.text)
 
 # 獲取最新的收盤價
 def get_latest_price():
