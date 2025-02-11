@@ -7,8 +7,8 @@ import time
 from datetime import datetime
 import os
 
-LINE_NOTIFY_TOKEN = "67fXIZY32D7uQfHGAp7mXVVGGQeE0S8od49JQKZMvsm"
-# LINE_NOTIFY_TOKEN = os.getenv("LINE_NOTIFY_TOKEN")
+
+LINE_NOTIFY_TOKEN = os.getenv("LINE_NOTIFY_TOKEN")
 
 
 # get 006208 ETD historical data
