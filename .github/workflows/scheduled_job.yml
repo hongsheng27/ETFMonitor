@@ -12,7 +12,7 @@ jobs:
     steps:
       # 步驟 1：檢查代碼
       - name: Checkout code
-        uses: actions/checkout@v3ß
+        uses: actions/checkout@v3
 
       # 步驟 2：設置 Python 環境
       - name: Set up Python
