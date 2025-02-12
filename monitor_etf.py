@@ -3,13 +3,13 @@ import pandas as pd
 import numpy as np
 import time
 import yfinance as yf
-import time
 from datetime import datetime
 import os
+import pytz
 
 
-# LINE_NOTIFY_TOKEN = os.getenv("LINE_NOTIFY_TOKEN")
-LINE_NOTIFY_TOKEN = "67fXIZY32D7uQfHGAp7mXVVGGQeE0S8od49JQKZMvsm"
+# LINE_NOTIFY_TOKEN = os.getenv("LINE_NOTIFY_TOKEN")g
+LINE_NOTIFY_TOKEN = "67fXIZY32D7uQfHGAp7mXVVGGQeE0S8od49ｓJQKZMvsm"
 
 # check market is open
 def isMarketOpen():
