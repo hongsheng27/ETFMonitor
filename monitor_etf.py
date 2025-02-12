@@ -8,16 +8,14 @@ import pytz
 
 
 # LINE_NOTIFY_TOKEN = os.getenv("LINE_NOTIFY_TOKEN")g
-LINE_NOTIFY_TOKEN = "67fXIZY32D7uQfHGAp7mXVVGGQeE0S8od49ｓJQKZMvsm"
+LINE_NOTIFY_TOKEN = "67fXIZY32D7uQfHGAp7mXVVGGQeE0S8od49JQKZMvsm"
 
 # check market is open
 def isMarketOpen():
     taiwanTimeZone = pytz.timezone('Asia/Taipei')
     now = datetime.now(taiwanTimeZone)
-
     marketOpen = dtTime(9, 0, 0)
     marketClose = dtTime(13, 30, 0)
-
     return now.weekday() < 5 and marketOpen <= now.time() <= marketClose
 
 
