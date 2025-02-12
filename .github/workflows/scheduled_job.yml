@@ -2,7 +2,7 @@ name: Run ETF Monitor
 
 on:
   schedule:
-     - cron: "0 1-5 * * 1-5"  # 台灣交易日 UTC 時間 1:00 至 5:00 的每小時整點
+     - cron: "5 1-5 * * 1-5"  # 台灣交易日 UTC 時間 1:00 至 5:00 的每小時整點
   workflow_dispatch:       # 允許手動觸發
 
 jobs:
@@ -12,7 +12,7 @@ jobs:
     steps:
       # 步驟 1：檢查代碼
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3ß
 
       # 步驟 2：設置 Python 環境
       - name: Set up Python

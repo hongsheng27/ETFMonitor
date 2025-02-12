@@ -1,9 +1,8 @@
 import requests
 import pandas as pd
 import numpy as np
-import time
 import yfinance as yf
-from datetime import datetime
+from datetime import datetime, time as dtTime  
 import os
 import pytz
 
@@ -16,8 +15,8 @@ def isMarketOpen():
     taiwanTimeZone = pytz.timezone('Asia/Taipei')
     now = datetime.now(taiwanTimeZone)
 
-    marketOpen = time(9, 0, 0)
-    marketClose = time(13, 30, 0)
+    marketOpen = dtTime(9, 0, 0)
+    marketClose = dtTime(13, 30, 0)
 
     return now.weekday() < 5 and marketOpen <= now.time() <= marketClose
 
@@ -67,10 +66,10 @@ def getLatestPrice():
 def monitorLatestPrice():
     if not isMarketOpen():
         return
-    latest_price = get_latest_price()
+    latest_price = getLatestPrice()
     if latest_price is not None:
         message = f"📢 006208 ETF 最新收盤價為：{latest_price:.2f} 元"
-        send_line_message(message)
+        sendLineMessage(message)
     else:
         print("未獲取到最新價格，跳過通知")
 
