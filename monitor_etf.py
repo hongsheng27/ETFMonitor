@@ -60,33 +60,18 @@ def getLatestPrice():
         return None
     
 
-# 報一次最新目標價
-def monitorLatestPrice():
+def monitorETF():
     if not isMarketOpen():
         return
+    df = calculateStochasticK(getStockData())
+    latest_k = df["%K"].iloc[-1]  
     latest_price = getLatestPrice()
-    if latest_price is not None:
-        message = f"📢 006208 ETF 最新收盤價為：{latest_price:.2f} 元"
-        sendLineMessage(message)
+    if latest_k < 20:  
+        sendLineMessage(f"⚠️ 006208 ETF K值跌破 20，目前為 {latest_k:.2f}，最新收盤價為：{latest_price:.2f} 元<，請關注市場！")
     else:
-        print("未獲取到最新價格，跳過通知")
+        sendLineMessage("K值未跌破20，不發送通知")
 
 # 主程式
 if __name__ == "__main__":
-    monitorLatestPrice()
-
-# 監控 ETF K 值
-# def monitor_etf():
-    # while True:
-    #     df = get_stock_data()
-    #     df = calculate_stochastic_k(df)
-
-    #     latest_k = df["%K"].iloc[-1]  # 最新 K 值
-
-    #     if latest_k < 20:  # 低於 20 時發送通知
-    #         send_line_message(f"⚠️ 006208 ETF K值跌破 20，目前為 {latest_k:.2f}，請關注市場！")
-
-    #     time.sleep(3600)  # 每小時檢查一次
-
-# if __name__ == "__main__":
-#     monitor_etf()
+    monitorETF()
+    
