@@ -9,6 +9,7 @@ import pytz
 
 # LINE_NOTIFY_TOKEN = os.getenv("LINE_NOTIFY_TOKEN")g
 LINE_NOTIFY_TOKEN = "67fXIZY32D7uQfHGAp7mXVVGGQeE0S8od49JQKZMvsm"
+TARGET_ETF = "006208.TW"
 
 # check market is open
 def isMarketOpen():
@@ -19,9 +20,9 @@ def isMarketOpen():
     return now.weekday() < 5 and marketOpen <= now.time() <= marketClose
 
 
-# get 006208 ETD historical data
+# get ETF historical data
 def getStockData():
-    stock = yf.Ticker('006208.TW')
+    stock = yf.Ticker('{TARGET_ETF}.TW')
     df = stock.history(period='1mo')
     return df
 
@@ -48,7 +49,7 @@ def sendLineMessage(message):
 # 獲取最新的收盤價
 def getLatestPrice():
     try:
-        ticker = yf.Ticker('006208.TW')  # 006208 是台灣 ETF 的代碼
+        ticker = yf.Ticker('{TARGET_ETF}.TW') 
         df = ticker.history(period='1d')  # 抓取當天的數據
         if not df.empty:
             return df['Close'].iloc[-1]  # 獲取最新的收盤價
@@ -67,9 +68,9 @@ def monitorETF():
     latest_k = df["%K"].iloc[-1]  
     latest_price = getLatestPrice()
     if latest_k < 20:  
-        sendLineMessage(f"⚠️ 006208 ETF K值跌破 20，目前為 {latest_k:.2f}，最新收盤價為：{latest_price:.2f} 元<，請關注市場！")
+        sendLineMessage(f"⚠️ {TARGET_ETF} K值跌破 20，目前為 {latest_k:.2f}，最新收盤價為：{latest_price:.2f} 元<，請關注市場！")
     else:
-        sendLineMessage("K值未跌破20，不發送通知")
+        sendLineMessage(f"⚠️ {TARGET_ETF} K值未跌破20，最新收盤價為：{latest_price:.2f} 元，不發送通知")
 
 # 主程式
 if __name__ == "__main__":
