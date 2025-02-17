@@ -7,8 +7,8 @@ import os
 import pytz
 
 
-# LINE_NOTIFY_TOKEN = os.getenv("LINE_NOTIFY_TOKEN")g
-LINE_NOTIFY_TOKEN = "67fXIZY32D7uQfHGAp7mXVVGGQeE0S8od49JQKZMvsm"
+LINE_NOTIFY_TOKEN = os.getenv("LINE_NOTIFY_TOKEN")
+
 TARGET_ETF = "006208"
 
 # check market is open
