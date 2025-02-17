@@ -22,7 +22,7 @@ def isMarketOpen():
 
 # get ETF historical data
 def getStockData():
-    stock = yf.Ticker('{TARGET_ETF}.TW')
+    stock = yf.Ticker(f"{TARGET_ETF}.TW")
     df = stock.history(period='1mo')
     return df
 
