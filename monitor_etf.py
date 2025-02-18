@@ -49,7 +49,7 @@ def sendLineMessage(message):
 # 獲取最新的收盤價
 def getLatestPrice():
     try:
-        ticker = yf.Ticker('{TARGET_ETF}.TW') 
+        ticker = yf.Ticker(f"{TARGET_ETF}.TW") 
         df = ticker.history(period='1d')  # 抓取當天的數據
         if not df.empty:
             return df['Close'].iloc[-1]  # 獲取最新的收盤價
