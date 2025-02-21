@@ -8,6 +8,8 @@ import pytz
 
 
 LINE_NOTIFY_TOKEN = os.getenv("LINE_NOTIFY_TOKEN")
+if not LINE_NOTIFY_TOKEN:
+    print("❌ 環境變數 LINE_NOTIFY_TOKEN 未設置！請確認 GitHub Secrets 設定")
 
 TARGET_ETF = "006208"
 

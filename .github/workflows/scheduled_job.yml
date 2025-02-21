@@ -22,7 +22,9 @@ jobs:
           python-version: "3.9"
 
       # 步驟 3：安裝依賴
-      - name: Install dependencies
+      - name: Install 
+        env:
+            LINE_NOTIFY_TOKEN: ${{ secrets.LINE_NOTIFY_TOKEN }}
         run: |
           pip install --upgrade pip
           pip install -r requirements.txt
