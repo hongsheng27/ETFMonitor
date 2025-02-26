@@ -23,12 +23,12 @@ jobs:
 
       # 步驟 3：安裝依賴
       - name: Install 
-        env:
-            LINE_NOTIFY_TOKEN: ${{ secrets.LINE_NOTIFY_TOKEN }}
         run: |
           pip install --upgrade pip
           pip install -r requirements.txt
 
       # 步驟 4：執行腳本
       - name: Run ETF monitor script
+        env:
+            LINE_NOTIFY_TOKEN: ${{ secrets.LINE_NOTIFY_TOKEN }}
         run: python monitor_etf.py
