@@ -90,7 +90,7 @@ def monitorETF():
     if latest_k < 20:  
         sendLineMessage(f"⚠️ {TARGET_ETF} K值跌破 20，目前為 {latest_k:.2f}，最新收盤價為：{latest_price:.2f} 元<，請關注市場！")
     else:
-        sendLineMessage(f"⚠️ {TARGET_ETF} K值未跌破20，最新收盤價為：{latest_price:.2f} 元，不發送通知")
+        print(f"K值未跌破20，最新收盤價為：{latest_price:.2f} 元，不發送通知")
 
 # 主程式
 if __name__ == "__main__":
